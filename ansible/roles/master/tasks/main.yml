@@ -1,0 +1,21 @@
+- name: Init cluster
+  command: kubeadm init --pod-network-cidr=192.168.0.0/16
+  args:
+    creates: /etc/kubernetes/admin.conf
+
+- name: Setup kubeconfig
+  shell: |
+    mkdir -p /root/.kube
+    cp /etc/kubernetes/admin.conf /root/.kube/config
+
+- name: Install Calico
+  command: kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/calico.yaml
+  environment:
+    KUBECONFIG: /root/.kube/config
+
+- name: Get join command
+  command: kubeadm token create --print-join-command
+  register: join_cmd
+
+- set_fact:
+    kube_join_cmd: "{{ join_cmd.stdout }}"

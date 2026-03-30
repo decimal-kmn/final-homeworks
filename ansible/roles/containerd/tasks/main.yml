@@ -1,0 +1,15 @@
+- name: Install containerd
+  apt:
+    name: containerd
+    state: present
+
+- name: Configure containerd
+  shell: |
+    mkdir -p /etc/containerd
+    containerd config default > /etc/containerd/config.toml
+    sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+
+- systemd:
+    name: containerd
+    enabled: true
+    state: restarted

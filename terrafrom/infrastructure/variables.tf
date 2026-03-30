@@ -19,3 +19,9 @@ variable "default_zone" {
   description = "Default availability zone"
   default     = "ru-central1-a"
 }
+
+variable "zone_workers" {
+  type = list(string)
+  description = "zones for workers"
+  default = ["ru-central1-a", "ru-central1-b"]
+}

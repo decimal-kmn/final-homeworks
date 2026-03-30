@@ -1,6 +1,3 @@
-# Terraform backend configuration using Yandex Object Storage
-# Note: Backend configuration cannot contain interpolations. 
-# Values should be passed via CLI arguments during initialization.
 terraform {
   backend "s3" {
     endpoints = {
@@ -18,12 +15,10 @@ terraform {
   }
 }
 
-# Create VPC Network
 resource "yandex_vpc_network" "main" {
   name = "terraform-vpc-network"
 }
 
-# Create Subnet in Zone A
 resource "yandex_vpc_subnet" "subnet_a" {
   name           = "terraform-subnet-a"
   zone           = "ru-central1-a"
@@ -31,7 +26,6 @@ resource "yandex_vpc_subnet" "subnet_a" {
   v4_cidr_blocks = ["10.0.1.0/24"]
 }
 
-# Create Subnet in Zone B
 resource "yandex_vpc_subnet" "subnet_b" {
   name           = "terraform-subnet-b"
   zone           = "ru-central1-b"

@@ -50,3 +50,8 @@ output "sa_secret_key" {
 output "bucket_name" {
   value = yandex_storage_bucket.terraform_state.bucket
 }
+
+output "sa_account_id" {
+  value = yandex_iam_service_account.terraform_sa.id
+  sensitive = true
+}
